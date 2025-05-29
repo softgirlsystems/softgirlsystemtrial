@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Soft Girl Systems – Review Tool</title>
+  <style>
+    :root {
+      --pink: #f472b6;
+      --blue: #60a5fa;
+      --bg: #fdfdfd;
+      --text: #1f2937;
+      --light: #f9fafb;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+    }
+
+    header {
+      padding: 60px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--pink), var(--blue));
+      color: white;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      margin-top: 25px;
+      padding: 12px 30px;
+      background-color: white;
+      color: var(--pink);
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: var(--blue);
+      color: white;
+    }
+
+    .section {
+      padding: 60px 20px;
+      max-width: 960px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .step {
+      background-color: var(--bg);
+      border: 2px solid var(--pink);
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+
+    .step:hover {
+      transform: translateY(-4px);
+    }
+
+    .step h3 {
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    footer {
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #888;
+      background-color: #f1f5f9;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 3rem auto;
+      padding: 1.5rem;
+      background: #fff;
+      border: 2px solid var(--pink);
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    button[type="submit"] {
+      margin-top: 20px;
+      background-color: var(--blue);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: var(--pink);
+    }
+
+    #trialMessage {
+      max-width: 400px;
+      margin: 1rem auto;
+      text-align: center;
+      font-weight: bold;
+      color: var(--pink);
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Soft Girl Systems</h1>
+    <p>Turn reviews into revenue, one soft star at a time 💖</p>
+    <button class="cta-button" onclick="document.getElementById('reviewForm').scrollIntoView({ behavior: 'smooth' });">Leave a Review</button>
+  </header>
+
+  <section class="section">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>1. Collect Feedback</h3>
+        <p>Get honest reviews from real customers.</p>
+      </div>
+      <div class="step">
+        <h3>2. Filter & Redirect</h3>
+        <p>Only send 4–5 star customers to Google Reviews.</p>
+      </div>
+      <div class="step">
+        <h3>3. Keep It Private</h3>
+        <p>Use low-star reviews to improve privately.</p>
+      </div>
+      <div class="step">
+        <h3>4. Win More Customers</h3>
+        <p>Showcase glowing feedback on Google & social.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="trialMessage"></div>
+
+  <!-- Review Form -->
+  <form id="reviewForm">
+    <h2 style="color: #ff69b4;">Leave a Review</h2>
+
+    <input type="text" id="business" placeholder="Business Name" readonly required />
+    <input type="text" id="name" placeholder="Your Name" required />
+    <textarea id="message" placeholder="Your Review" required></textarea>
+
+    <label for="rating">Rating (1 to 5 stars):</label>
+    <input type="number" id="rating" min="1" max="5" required />
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <footer>
+    &copy; 2025 Soft Girl Systems – Designed with love + logic 💙💖
+  </footer>
+
+  <!-- Firebase (Compat Version!) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <!-- Firebase Config & Logic -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCqrwY8FYzM3iH589sGoXytCF8u5iHgsHM",
+      authDomain: "soft-girl-system.firebaseapp.com",
+      databaseURL: "https://soft-girl-system-default-rtdb.firebaseio.com/",
+      projectId: "soft-girl-system",
+      storageBucket: "soft-girl-system.appspot.com",
+      messagingSenderId: "53315613933",
+      appId: "1:53315613933:web:e5533a5cca03d22d8208e4"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // === Google Review Links ===
+    const googleReviewLinks = {
+      "ExhaleSpaMidtownAtlanta": "https://search.google.com/local/writereview?placeid=ChIJGxjLBou0wYgRT7HvIfH7YnA"
+    };
+
+    // === Trial Setup ===
+
+    // Get URL parameter by name helper
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    // Get or set trial start date in localStorage per business
+    function getTrialStartDate(biz) {
+      return localStorage.getItem(`trialStart_${biz}`);
+    }
+
+    function setTrialStartDate(biz, date) {
+      localStorage.setItem(`trialStart_${biz}`, date);
+    }
+
+    // Calculate days left from startDate
+    function getDaysLeft(startDate) {
+      const now = new Date();
+      const start = new Date(startDate);
+      const diffTime = now - start;
+      const diffDays = 7 - Math.floor(diffTime / (1000 * 60 * 60 * 24)); // 7-day trial
+      return diffDays;
+    }
+
+    // On page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const bizParamRaw = getParam('biz');
+      if (!bizParamRaw) {
+        alert('No business name detected in URL! Please use a proper link.');
+        document.getElementById('reviewForm').style.display = 'none';
+        return;
+      }
+
+      // Format biz param nicely for display (optional)
+      const bizParam = bizParamRaw.replace(/([A-Z])/g, ' $1').trim(); // "ExhaleSpaMidtownAtlanta" -> "Exhale Spa Midtown Atlanta"
+      document.getElementById('business').value = bizParam;
+
+      // Check if trial started
+      let trialStart = getTrialStartDate(bizParamRaw);
+      if (!trialStart) {
+        // Start trial now
+        const todayISO = new Date().toISOString();
+        setTrialStartDate(bizParamRaw, todayISO);
+        trialStart = todayISO;
+      }
+
+      const daysLeft = getDaysLeft(trialStart);
+
+      const trialMessageDiv = document.getElementById('trialMessage');
+
+      if (daysLeft > 0) {
+        trialMessageDiv.innerHTML = `🚀 Free Trial: ${daysLeft} day${daysLeft > 1 ? 's' : ''} left to collect reviews for <strong>${bizParam}</strong>!`;
+        document.getElementById('reviewForm').style.display = 'block';
+      } else {
+        trialMessageDiv.innerHTML = `
+          ⚠️ Your free trial for <strong>${bizParam}</strong> has expired.<br />
+          <button id="upgradeBtn" style="
+            background: var(--pink);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+          ">Upgrade Now</button>
+        `;
+
+        document.getElementById('reviewForm').style.display = 'none';
+
+        document.getElementById('upgradeBtn').addEventListener('click', () => {
+          // Redirect to your payment or upgrade page
+          window.location.href = 'https://yourpaymentpage.com';
+        });
+      }
+    });
+
+    // === Form Submission ===
+    document.getElementById('reviewForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const biz = document.getElementById('business').value.replace(/\s+/g, '');
+      const name = document.getElementById('name').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const rating = parseInt(document.getElementById('rating').value.trim());
+
+      // Double-check trial still active at submission
+      const trialStart = localStorage.getItem(`trialStart_${biz}`);
+      if (!trialStart || getDaysLeft(trialStart) <= 0) {
+        alert('Sorry, your free trial has expired. Please upgrade to continue.');
+        return;
+      }
+
+      if (!biz || !name || !message || !rating) {
+        alert("Please fill out all fields!");
+        return;
+      }
+
+      database.ref('reviews').push({
+        business: biz,
+        name: name,
+        message: message,
+        rating: rating,
+        timestamp: new Date().toISOString()
+      }).then(() => {
+        if (rating >= 4) {
+          // Redirect to Google review page for the business
+          window.location.href = googleReviewLinks[biz] || ("https://www.google.com/search?q=" + encodeURIComponent(biz));
+        } else {
+          alert("Thanks for your feedback! 💖 We'll use it to improve.");
+        }
+
+        document.getElementById('reviewForm').reset();
+      }).catch((error) => {
+        alert("Something went wrong 😢");
+        console.error(error);
+      });
+    });
+  </script>
+
+</body>
+</html>
