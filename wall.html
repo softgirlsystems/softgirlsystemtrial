@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wall of Love 💖 | Soft Girl Systems</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --pink: #f472b6;
+      --blue: #60a5fa;
+      --light: #fef2f8;
+      --text: #1f2937;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--pink);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .review-card {
+      background: #fff;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      border: 2px solid var(--pink);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .review-stars {
+      color: gold;
+      margin-bottom: 0.5rem;
+    }
+
+    .review-text {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .review-name {
+      font-weight: bold;
+      color: var(--blue);
+      font-size: 0.9rem;
+    }
+
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💌 Wall of Love</h1>
+  <div class="review-grid" id="reviewGrid">
+    <!-- Reviews will load here -->
+  </div>
+
+  <footer>
+    &copy; 2025 Soft Girl Systems – Built with love & JavaScript 💅🏽
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <!-- Firebase Config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCqrwY8FYzM3iH589sGoXytCF8u5iHgsHM",
+      authDomain: "soft-girl-system.firebaseapp.com",
+      databaseURL: "https://soft-girl-system-default-rtdb.firebaseio.com/",
+      projectId: "soft-girl-system",
+      storageBucket: "soft-girl-system.appspot.com",
+      messagingSenderId: "53315613933",
+      appId: "1:53315613933:web:e5533a5cca03d22d8208e4"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const reviewGrid = document.getElementById("reviewGrid");
+
+    db.ref("reviews").on("value", (snapshot) => {
+      reviewGrid.innerHTML = ""; // clear old reviews
+      const data = snapshot.val();
+      if (!data) return;
+
+      Object.values(data).forEach(review => {
+        if (review.rating >= 4) {
+          const card = document.createElement("div");
+          card.className = "review-card";
+          card.innerHTML = `
+            <div class="review-stars">⭐️⭐️⭐️⭐️⭐️</div>
+            <div class="review-text">“${review.message}”</div>
+            <div class="review-name">– ${review.name}</div>
+          `;
+          reviewGrid.appendChild(card);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
